@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Truco game</title>
+    <link rel="stylesheet" href="estilos.css">
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+</head>
+<body>
+
+    <div class="cartasUsuario">
+        <div class="card-group">
+            <div class="card">
+              <!-- <img src="..." class="card-img-top" alt="..."> -->
+              <div class="card-body b1">
+                <h5 class="card-title">Simbolo</h5>
+              </div>
+              <div class="c1">
+                <h5> Numero</h5>
+              </div>
+            </div>
+            <div class="card">
+              <!-- <img src="..." class="card-img-top" alt="..."> -->
+              <div class="card-body b2">
+                <h5 class="card-title">Simbolo</h5>
+              </div>
+              <div class="c2">
+                <h5> Numero</h5>
+              </div>
+            </div>
+            <div class="card">
+              <!-- <img src="..." class="card-img-top" alt="..."> -->
+              <div class="card-body b3">
+                <h5 class="card-title">Simbolo</h5>
+              </div>
+              <div class="c3">
+                <h5> Numero</h5>
+              </div>
+            </div>
+          </div>
+    </div>
+
+    <button type="button" class="btn btn-outline-dark " onclick="mezclarCartas(allCards)"> Dame cartas! </button>
+
+    <div class="tablaPuntaje">
+        <table align="center" style="border: 5px #0091ff solid">
+            <tbody>
+                <tr>
+                    <td style="border: 15px #0091ff solid">Cell 1x1</td>
+                    <td style="border: 15px #0091ff solid">Cell 2x1</td>
+                </tr>
+                <tr>
+                    <td style="border: 15px #0091ff solid">Cell 1x2</td>
+                    <td style="border: 15px #0091ff solid">Cell 2x2</td>
+                </tr>
+                <tr>
+                    <td style="border: 15px #0091ff solid">Cell 1x3</td>
+                    <td style="border: 15px #0091ff solid">Cell 2x3</td>
+                </tr>
+                <tr>
+                    <td style="border: 15px #0091ff solid">Cell 1x4</td>
+                    <td style="border: 15px #0091ff solid">Cell 2x4</td>
+                </tr>
+                <tr>
+                    <td style="border: 15px #0091ff solid">Cell 1x5</td>
+                    <td style="border: 15px #0091ff solid">Cell 2x5</td>
+                </tr>
+                <tr>
+                    <td style="border: 15px #0091ff solid">Cell 1x6</td>
+                    <td style="border: 15px #0091ff solid">Cell 2x6</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>    
+
+
+    <script src="js/trucogame.js"></script>
+
+</body>
+</html>
