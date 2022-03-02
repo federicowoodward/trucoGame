@@ -2,3 +2,9 @@
     padding: center;
     padding: 30px;
 }
+.btnCartas {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding-top: 10px;
+}
