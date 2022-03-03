@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Truco game</title>
     <link rel="stylesheet" href="estilos.css">
@@ -11,6 +10,10 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </head>
 <body>
+
+<h1 id="bienvenidoName"></h1><p>Para comenzar primero oprime el boton "Repartir cartas", luego podras jugar tus cartas con los botones 1,2,3 en tu 
+  teclado. 
+</p>
 
     <div class="cartasUsuario">
         <div class="card-group">
@@ -43,35 +46,26 @@
             </div>
           </div>
     </div>
-<div class="btnCartas">
-    <button type="button" class="btn btn-outline-dark" id="btnEvento"  > Repartir cartas </button>
-</div>
+    <div class="btn-group" role="group" aria-label="Basic example" id="botones123">
+      <button type="button" class="btn btn-primary" id="btnCarta1">1</button>
+      <button type="button" class="btn btn-primary" id="btnCarta2">2</button>
+      <button type="button" class="btn btn-primary" id="btnCarta3">3</button>
+    </div>
+
+    <div class="btnCartas" >
+        <button type="button" class="btn btn-outline-dark" id="btnEvento"> Repartir cartas </button>
+    </div>
+
     <div class="tablaPuntaje">
-        <table align="center" style="border: 5px #0091ff solid">
+        <table>
             <tbody>
                 <tr>
-                    <td style="border: 15px #0091ff solid">Cell 1x1</td>
-                    <td style="border: 15px #0091ff solid">Cell 2x1</td>
+                    <td style="border: 15px #0091ff solid" id="nameTagTab">Jugador</td>
+                    <td style="border: 15px #0091ff solid">PC</td>
                 </tr>
                 <tr>
-                    <td style="border: 15px #0091ff solid">Cell 1x2</td>
-                    <td style="border: 15px #0091ff solid">Cell 2x2</td>
-                </tr>
-                <tr>
-                    <td style="border: 15px #0091ff solid">Cell 1x3</td>
-                    <td style="border: 15px #0091ff solid">Cell 2x3</td>
-                </tr>
-                <tr>
-                    <td style="border: 15px #0091ff solid">Cell 1x4</td>
-                    <td style="border: 15px #0091ff solid">Cell 2x4</td>
-                </tr>
-                <tr>
-                    <td style="border: 15px #0091ff solid">Cell 1x5</td>
-                    <td style="border: 15px #0091ff solid">Cell 2x5</td>
-                </tr>
-                <tr>
-                    <td style="border: 15px #0091ff solid">Cell 1x6</td>
-                    <td style="border: 15px #0091ff solid">Cell 2x6</td>
+                    <td style="border: 15px #0091ff solid">S</td>
+                    <td style="border: 15px #0091ff solid">S</td>
                 </tr>
             </tbody>
         </table>
