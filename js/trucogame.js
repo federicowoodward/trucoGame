@@ -62,8 +62,13 @@ let playerCards = [];
 
 let mesaDeJuego = [];
 
+let mesaDeJuegoPc = [];      /* temporal hasta crear IA*/ function temporal() {if (pcCards.length == 3) mesaDeJuegoPc.push(pcCards[0],pcCards[1],pcCards[2]) ;} 
+
 let nameTagTab = document.getElementById("nameTagTab");
 let bienvenidoName = document.getElementById("bienvenidoName");
+
+let puntosPlayer = document.getElementById("puntosPlayer");
+let puntosPc = document.getElementById("puntosPc");
 
 // ---------------------------------------    eventos --------------------------------
 
@@ -74,6 +79,8 @@ botonC2.addEventListener("click",jugada2);
 botonC3.addEventListener("click",jugada3);
 
 document.addEventListener("DOMContentLoaded",nameTag);
+
+
 
 // ------------------------------------------- funciones --------------------------------  
 function nameTag(){
@@ -155,6 +162,7 @@ function mezclarCartas(array) {
 
     console.log(pcCards);
     ocultarBoton();
+    temporal();
     
 }
     function ocultarBoton() {
@@ -164,16 +172,19 @@ function mezclarCartas(array) {
     function jugada1() {
         mesaDeJuego.push(playerCards[0]);
         endGame();
+        
     }
 
     function jugada2() {
         mesaDeJuego.push(playerCards[1]);
         endGame();
+    
     }
 
     function jugada3() {
         mesaDeJuego.push(playerCards[2]);
         endGame();
+        
     }
 
     function endGame() {
@@ -182,20 +193,49 @@ function mezclarCartas(array) {
         } 
     }
 
+function comparacionDeCarta (mesaDeJuego, mesaDeJuegoPc) {
+    if (mesaDeJuego.length == 1) {
+        if (mesaDeJuego[0].peso < mesaDeJuegoPc[0].peso) {
+            alert("Perdiste la ronda!");
+            return "R1LOST";
+        } else if (mesaDeJuego[0].peso > mesaDeJuegoPc[0].peso) {
+            alert("Ganaste la ronda!");
+            return "R1WIN";
+        } else if (mesaDeJuego[0].peso == mesaDeJuegoPc[0].peso) {
+            alert("Empate, segunda ronda parda!");
+            return "R1TIE";
+        }
+    }
+    else if (mesaDeJuego.length == 2) {
+        if (mesaDeJuego[0].peso < mesaDeJuegoPc[0].peso) {
+            alert("Perdiste la ronda!");
+            return "R1LOST";
+        } else if (mesaDeJuego[0].peso > mesaDeJuegoPc[0].peso) {
+            alert("Ganaste la ronda!");
+            return "R1WIN";
+        } else if (mesaDeJuego[0].peso == mesaDeJuegoPc[0].peso) {
+            alert("Empate, segunda ronda parda!");
+            return "R1TIE";
+        }
+    }
+    else if (mesaDeJuego.length == 3) {
+        if (mesaDeJuego[0].peso < mesaDeJuegoPc[0].peso) {
+            alert("Perdiste la ronda!");
+            return "R1LOST";
+        } else if (mesaDeJuego[0].peso > mesaDeJuegoPc[0].peso) {
+            alert("Ganaste la ronda!");
+            return "R1WIN";
+        } else if (mesaDeJuego[0].peso == mesaDeJuegoPc[0].peso) {
+            alert("Empate, segunda ronda parda!");
+            return "R1TIE";
+        }
+    } 
+}
+
     //tabla 
 
 
-function comparacionDeCarta (carta1, carta2) {
-    if (carta1.peso > carta2.peso) {
-        return "el jugador " + jugador1 + "gana";
-    }
-    if (carta1.peso < carta2.peso) {
-        return "el jugador" + jugador2 + "gana";
-    }
-    if (carta1.peso == carta2.peso) {
-        return "ronda empatada";
-    }
-}
+
 
 
 
