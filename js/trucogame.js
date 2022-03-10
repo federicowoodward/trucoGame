@@ -1,7 +1,6 @@
 // ---------------------------------- variables ---------------------------     
 
 
-
 let boton = document.getElementById("btnEvento"); 
 
 let botonC1 = document.getElementById("btnCarta1");
@@ -14,7 +13,7 @@ let playerCards = [];
 
 let mesaDeJuego = [];
 
-let mesaDeJuegoPc = [];      /* temporal hasta crear IA*/ function temporal() {if (pcCards.length == 3) mesaDeJuegoPc.push(pcCards[0],pcCards[1],pcCards[2]) ;} 
+let mesaDeJuegoPc = [];      /* temporal hasta crear IA*/ function temporal() {pcCards.length == 3 && mesaDeJuegoPc.push(pcCards[0],pcCards[1],pcCards[2]); }
 
 let nameTagTab = document.getElementById("nameTagTab");
 let bienvenidoName = document.getElementById("bienvenidoName");
@@ -24,43 +23,50 @@ let puntosPc = document.getElementById("puntosPc");
 
 
 
-// ---------------------------------------    eventos --------------------------------
 
+// ---------------------------------------    eventos --------------------------------
 boton.addEventListener("click", startGame);
 
 botonC1.addEventListener("click",jugada1);
 botonC2.addEventListener("click",jugada2);
 botonC3.addEventListener("click",jugada3);
 
-document.addEventListener("DOMContentLoaded",sinNameTag());
 
 
+boton.addEventListener("click",() => { document.getElementById("btnEvento").style.display = "none";})
+
+
+//  ------------------------- pedir nombre ------------------
+
+const init = ()=> { 
+    if (localStorage.getItem("nameTag") == null) {
+    Swal.fire({
+        title: 'Bienvenido!',
+        text: 'Cual es tu nombre?',
+        input: 'text',
+        inputPlaceholder: "Nombre",
+        confirmButtonText: 'Confirmar',
+        showLoaderOnConfirm: true,
+        
+        inputValidator: (value) => {
+            if (!value) {
+              return 'Necesitamos tu nombre!'
+            } else if (value) {
+                localStorage.setItem("nameTag", value);
+                nameTagTab.innerHTML = localStorage.getItem("nameTag");
+                bienvenidoName.innerHTML = "Bienvenido " + localStorage.getItem("nameTag") + "!!";
+            }
+        }
+    }
+    )
+} else {
+    console.log("nombre ya ingresado");
+};
+}
+
+document.addEventListener("DOMContentLoaded", init);
 
 // ------------------------------------------- funciones --------------------------------  
-function sinNameTag() {
-    if (localStorage.getItem("nameTag") == null) {
-        nameTag();
-        
-    }   
-
-    nameTagTab.innerHTML = localStorage.getItem("nameTag");
-    bienvenidoName.innerHTML = "Bienvenido " + localStorage.getItem("nameTag") + "!!";
-    
-}
-
-function nameTag(){
-    let nameTag = prompt("Hola! Como es tu nombre?")
-    localStorage.setItem("nameTag", nameTag);
-    
-
-    if (nameTag == null) { 
-        alert("Necesitamos tu nombre!");
-        repetirNameTag();
-    }
-}
-function repetirNameTag(){
-    nameTag();
-}
 
 function startGame () {
     mezclarCartas(allCards);
@@ -127,14 +133,10 @@ function mezclarCartas(array) {
     }
 
     console.log(pcCards);
-    ocultarBoton();
     temporal();
     
 }
-    function ocultarBoton() {
-        document.getElementById("btnEvento").style.display = "none";
-    }
-
+  
     function jugada1() {
         mesaDeJuego.push(playerCards[0]);
         endGame();
@@ -154,9 +156,8 @@ function mezclarCartas(array) {
     }
 
     function endGame() {
-        if (mesaDeJuego.length === 3) {
-        document.getElementById("botones123").style.display = "none";
-        } 
+        mesaDeJuego.length === 3 ? document.getElementById("botones123").style.display = "none" : null ;
+
     }
 
  let cantidad = mesaDeJuego.length;
