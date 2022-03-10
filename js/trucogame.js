@@ -136,25 +136,19 @@ function mezclarCartas(array) {
     temporal();
     
 }
-  
-    function jugada1() {
+    const jugada1 = () => { 
         mesaDeJuego.push(playerCards[0]);
         endGame();
-        
     }
-
-    function jugada2() {
+    const jugada2 = () => { 
         mesaDeJuego.push(playerCards[1]);
         endGame();
-    
     }
-
-    function jugada3() {
+    const jugada3 = () => { 
         mesaDeJuego.push(playerCards[2]);
         endGame();
-        
     }
-
+    
     function endGame() {
         mesaDeJuego.length === 3 ? document.getElementById("botones123").style.display = "none" : null ;
 
