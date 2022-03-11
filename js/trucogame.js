@@ -21,15 +21,17 @@ let bienvenidoName = document.getElementById("bienvenidoName");
 let puntosPlayer = document.getElementById("puntosPlayer");
 let puntosPc = document.getElementById("puntosPc");
 
+let t = document.getElementById("t");
+let rt = document.getElementById("rt");
+let vc = document.getElementById("vc");
+let rtn = document.getElementById("rt");
+let vcn = document.getElementById("vc");
 
-
+let cantosPc = [true,false,true,false,true,false]; cantosPc.sort(function() {return Math.random() - 0.5});
 
 // ---------------------------------------    eventos --------------------------------
 boton.addEventListener("click", startGame);
 
-botonC1.addEventListener("click",jugada1);
-botonC2.addEventListener("click",jugada2);
-botonC3.addEventListener("click",jugada3);
 
 
 
@@ -60,7 +62,8 @@ const init = ()=> {
     }
     )
 } else {
-    console.log("nombre ya ingresado");
+    nameTagTab.innerHTML = localStorage.getItem("nameTag");
+    bienvenidoName.innerHTML = "Bienvenido " + localStorage.getItem("nameTag") + "!!";
 };
 }
 
@@ -134,115 +137,96 @@ function mezclarCartas(array) {
 
     console.log(pcCards);
     temporal();
-    
+    document.getElementById("botones123").style.display = "flex";
 }
+
     const jugada1 = () => { 
         mesaDeJuego.push(playerCards[0]);
-        endGame();
+        document.getElementById("btnCarta1").style.display = "none";
+        comparacionDeCarta(playerCards[0],pcCards[0]);
     }
     const jugada2 = () => { 
         mesaDeJuego.push(playerCards[1]);
-        endGame();
+        document.getElementById("btnCarta2").style.display = "none";
+        comparacionDeCarta(playerCards[1],pcCards[1]);
     }
     const jugada3 = () => { 
         mesaDeJuego.push(playerCards[2]);
-        endGame();
+        document.getElementById("btnCarta3").style.display = "none";
+        comparacionDeCarta(playerCards[2],pcCards[2]);
     }
+    botonC1.addEventListener("click",jugada1);
+    botonC2.addEventListener("click",jugada2);
+    botonC3.addEventListener("click",jugada3);
+
     
-    function endGame() {
-        mesaDeJuego.length === 3 ? document.getElementById("botones123").style.display = "none" : null ;
 
-    }
-
- let cantidad = mesaDeJuego.length;
-
- function comparacionDeCarta(mesaDeJuego, mesaDeJuegoPc) {
-    
-    if (cantidad == 1) {
-        if (mesaDeJuego[0].peso > mesaDeJuegoPc[0].peso) {
-            let ganadorR1 = "player";
-            console.log(ganadorR1);
-        } else if (mesaDeJuego[0].peso < mesaDeJuegoPc[0].peso) {
-            let ganadorR1 = "Pc";
-            console.log("1113")
-        } else if (mesaDeJuego[0].peso == mesaDeJuegoPc[0].peso) {
-            let ganadorR1 = "empate";
-            console.log("1112")
-        }   
-    }
-}
-    //tabla 
-
-
-
-
-
-
-
-
-// cantos de truco 
-let jugadorCanta = 0;
-    function cantoTruco (respuesta) {
-        if (respuesta === "Quiero") {
-            return true;
-        } else {
-            "Termina la ronda, gana" + jugadorCanta;
-        }
-    }
-    function cantoReTruco (jugadorCanta, respuesta) {
-        if (respuesta === "Quiero") {
-            return true;
-        } else {
-            "Termina la ronda, gana" + jugadorCanta;
-        }
-    }
-    function cantoVale4 (jugadorCanta, respuesta) {
-        if (respuesta === "Quiero") {
-            return true;
-        } else {
-            "Termina la ronda, gana" + jugadorCanta;
-        }
-    }
-
-// nivel de canto de truco 
-
-
-let nivelTruco = 0; 
-
-if (cantoTruco() === true) {
-    let nivelTruco = 1;
-}
-if (cantoReTruco() === true) {
-    let nivelTruco = 2;
-}
-if (cantoVale4() === true) {
-    let nivelTruco = 3;
-} 
-
-
-
-
-
-
-
-// console.log({
-//     numero: elegirCarta.numero,
-//     simbolo: elegirCarta.simbolo
-//   })
-  
  
-/*
-function mezclarCartas(arrayDeCartas) {
-   
-    let elegirCarta1 = arrayDeCartas[Math.floor(Math.random() * arrayDeCartas.length)];
-    let elegirCarta2 = arrayDeCartas[Math.floor(Math.random() * arrayDeCartas.length)];
-    let elegirCarta3 = arrayDeCartas[Math.floor(Math.random() * arrayDeCartas.length)];
-    document.querySelector(".b1").innerHTML = elegirCarta1.simbolo;
-    document.querySelector(".c1").innerHTML = elegirCarta1.numero;
-    document.querySelector(".b2").innerHTML = elegirCarta2.simbolo;
-    document.querySelector(".c2").innerHTML = elegirCarta2.numero;
-    document.querySelector(".b3").innerHTML = elegirCarta3.simbolo;
-    document.querySelector(".c3").innerHTML = elegirCarta3.numero;
+
+ function comparacionDeCarta(playerCard, pcCard) { 
+    playerCard.peso == pcCard.peso ? alert("Empate") :
+    playerCard.peso > pcCard.peso ? alert("ganaste") :
+    playerCard.peso < pcCard.peso ? alert("perdiste"): null;
+ }   
+ 
+ 
+
+
+
+
+ //tabla 
+
+
+
+//  truco 
+let truco = false;
+let reTruco = false;
+let vale4 = false;
+// ocultacion de botones a medida q se van usamdo, NO TOCAR ANDA PERFECTO
+document.getElementById("rt").style.display = "none";
+document.getElementById("vc").style.display = "none";
+
+const trucoPorPc = () => {
+    cantoTruco(cantosPc[2]);
+    document.getElementById("t").style.display = "none";
+    document.getElementById("rt").style.display = "inline";
+    truco = true;
+}
+const reTrucoPorPc = () => {
+    cantoReTruco(cantosPc[5]);
+    document.getElementById("rt").style.display = "none";
+    document.getElementById("vc").style.display = "inline";
+    reTruco = true;
+}
+const vale4PorPc = () => {
+    cantoVale4(cantosPc[0]);
+    document.getElementById("vc").style.display = "none";
+    vale4 = true;
+}
+
+
+
+let trucoLevel = 0;
+
+    function cantoTruco (respuestaPc) {
+    if (respuestaPc == true) { alert("Continua la ronda, truco cantado"); trucoLevel++;
+        } else { alert("termina la ronda")};
     }
-*/
+    function cantoReTruco (respuestaPc) {
+        if (respuestaPc == true) { alert("Continua la ronda, truco cantado"); trucoLevel++;
+            } else { alert("termina la ronda")};
+        }
+    function cantoVale4 (respuestaPc) {
+        if (respuestaPc == true) { alert("Continua la ronda, truco cantado"); trucoLevel++;
+            } else { alert("termina la ronda")};
+        }
+
+ t.addEventListener("click", trucoPorPc);
+ rt.addEventListener("click", reTrucoPorPc);
+ vc.addEventListener("click", vale4PorPc);
+
+
+
+
+
 

@@ -38,6 +38,21 @@ function comparacionDeCarta (mesaDeJuego, mesaDeJuegoPc) {
     } 
 }
 
+mesaDeJuego, mesaDeJuegoPc) {
+    
+    if (cantidad == 1) {
+        if (mesaDeJuego[0].peso > mesaDeJuegoPc[0].peso) {
+            let ganadorR1 = "player";
+            console.log(ganadorR1);
+        } else if (mesaDeJuego[0].peso < mesaDeJuegoPc[0].peso) {
+            let ganadorR1 = "Pc";
+            console.log("1113")
+        } else if (mesaDeJuego[0].peso == mesaDeJuegoPc[0].peso) {
+            let ganadorR1 = "empate";
+            console.log("1112")
+        }   
+    }
+}
 
 
 

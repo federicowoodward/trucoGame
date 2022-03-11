@@ -10,9 +10,8 @@
 </head>
 <body>
 
-<h1 id="bienvenidoName"></h1><p>Para comenzar primero oprime el boton "Repartir cartas", luego podras jugar tus cartas con los botones 1,2,3 en tu 
-  teclado. 
-</p>
+<h1 id="bienvenidoName"></h1>
+<p>Para comenzar primero oprime el boton "Repartir cartas", luego podras jugar tus cartas con los botones 1,2,3. </p>
 
     <div class="cartasUsuario">
         <div class="card-group">
@@ -55,6 +54,28 @@
         <button type="button" class="btn btn-outline-dark" id="btnEvento"> Repartir cartas </button>
     </div>
 
+    <div class="cantos">
+      <div class="btn-group" role="group">
+        <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+          Truco
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+          <li><a class="dropdown-item" id="t">Truco</a></li>
+          <li><a class="dropdown-item" id="rt">Re truco</a></li>
+          <li><a class="dropdown-item" id="vc">Vale cuatro</a></li>
+        </ul>
+      </div>
+      <div class="btn-group" role="group">
+        <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+          Envido
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+          <li><a class="dropdown-item" href="#">Doble envido</a></li>
+          <li><a class="dropdown-item" href="#">Real envido</a></li>
+        </ul>
+      </div>
+    </div>
+
     <div class="tablaPuntaje">
         <table>
             <tbody>
@@ -69,12 +90,11 @@
             </tbody>
         </table>
     </div>    
-
+   
 
     <script src="js/trucogame.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="js/cartas.js"></script>
-
 
 </body>
 </html>
