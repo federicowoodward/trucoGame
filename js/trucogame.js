@@ -18,8 +18,7 @@ let mesaDeJuegoPc = [];      /* temporal hasta crear IA*/ function temporal() {p
 let nameTagTab = document.getElementById("nameTagTab");
 let bienvenidoName = document.getElementById("bienvenidoName");
 
-let puntosPlayer = document.getElementById("puntosPlayer");
-let puntosPc = document.getElementById("puntosPc");
+
 
 let t = document.getElementById("t");
 let rt = document.getElementById("rt");
@@ -28,6 +27,9 @@ let rtn = document.getElementById("rt");
 let vcn = document.getElementById("vc");
 
 let cantosPc = [true,false,true,false,true,false]; cantosPc.sort(function() {return Math.random() - 0.5});
+
+
+
 
 // ---------------------------------------    eventos --------------------------------
 boton.addEventListener("click", startGame);
@@ -49,6 +51,7 @@ const init = ()=> {
         inputPlaceholder: "Nombre",
         confirmButtonText: 'Confirmar',
         showLoaderOnConfirm: true,
+        
         
         inputValidator: (value) => {
             if (!value) {
@@ -141,17 +144,14 @@ function mezclarCartas(array) {
 }
 
     const jugada1 = () => { 
-        mesaDeJuego.push(playerCards[0]);
         document.getElementById("btnCarta1").style.display = "none";
         comparacionDeCarta(playerCards[0],pcCards[0]);
     }
     const jugada2 = () => { 
-        mesaDeJuego.push(playerCards[1]);
         document.getElementById("btnCarta2").style.display = "none";
         comparacionDeCarta(playerCards[1],pcCards[1]);
     }
     const jugada3 = () => { 
-        mesaDeJuego.push(playerCards[2]);
         document.getElementById("btnCarta3").style.display = "none";
         comparacionDeCarta(playerCards[2],pcCards[2]);
     }
@@ -164,15 +164,16 @@ function mezclarCartas(array) {
  
 
  function comparacionDeCarta(playerCard, pcCard) { 
-    playerCard.peso == pcCard.peso ? alert("Empate") :
-    playerCard.peso > pcCard.peso ? alert("ganaste") :
-    playerCard.peso < pcCard.peso ? alert("perdiste"): null;
+    if (playerCard.peso == pcCard.peso) {
+         alert("Empate");
+        } else if (playerCard.peso > pcCard.peso) {
+             alert("ganaste");
+             sumarTablaPlayer();
+            } else if (playerCard.peso < pcCard.peso) {
+                 alert("perdiste");
+                }
  }   
  
- 
-
-
-
 
  //tabla 
 
@@ -205,19 +206,19 @@ const vale4PorPc = () => {
 }
 
 
-
-let trucoLevel = 0;
+//
+let trucoLevel = 1;
 
     function cantoTruco (respuestaPc) {
-    if (respuestaPc == true) { alert("Continua la ronda, truco cantado"); trucoLevel++;
+    if (respuestaPc == true) { alert("Continua la ronda, truco cantado"); trucoLevel = 2;
         } else { alert("termina la ronda")};
     }
     function cantoReTruco (respuestaPc) {
-        if (respuestaPc == true) { alert("Continua la ronda, truco cantado"); trucoLevel++;
+        if (respuestaPc == true) { alert("Continua la ronda, truco cantado"); trucoLevel = 3;
             } else { alert("termina la ronda")};
         }
     function cantoVale4 (respuestaPc) {
-        if (respuestaPc == true) { alert("Continua la ronda, truco cantado"); trucoLevel++;
+        if (respuestaPc == true) { alert("Continua la ronda, truco cantado"); trucoLevel = 4;
             } else { alert("termina la ronda")};
         }
 
@@ -226,7 +227,53 @@ let trucoLevel = 0;
  vc.addEventListener("click", vale4PorPc);
 
 
+let puntosPc = document.getElementById("puntosPc");
+let puntosJuego = 0;
+
+const sumarTablaPlayer = () => { 
+    
+    switch (trucoLevel) {
+        case 1: puntosJuego++; actualizacionPuntosPLayer(); break;
+        case 2: puntosJuego =  puntosJuego + 2; actualizacionPuntosPLayer(); break;
+        case 3: puntosJuego =  puntosJuego + 3; actualizacionPuntosPLayer(); break;
+        case 4: puntosJuego =  puntosJuego + 4; actualizacionPuntosPLayer(); break;
+        default: puntos.innerHTML = 0;
+    }
+    
+ }
+
+const actualizacionPuntosPLayer = () => {
+        let puntos = document.getElementById("puntosPlayer");
+        puntos.innerHTML = puntosJuego;
+    }
+
+function showCards({numero,simbolo}) {
+    const contenido = document.getElementById("contenido")
+
+    contenido.innerHTML = `
+        <p> Numero: ${numero} </p>
+        <p> Simbolo: ${simbolo} </p>
+    `
+}
 
 
+const obtenerDatosTXT = () => {
+    
+    fetch("js/cartas.js")
+        .then(function (data) {
+            return data.text();
+        })
+        .then((allCardsJSON) => {
+            showCards(allCardsJSON);
+            
+        })
+        .catch((err) => {
+            console.log(err);
+        })
 
+}
+
+
+const btnTxt = document.getElementById("btnTxt");
+btnTxt.addEventListener("click",obtenerDatosTXT);   
 
