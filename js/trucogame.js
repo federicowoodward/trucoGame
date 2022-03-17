@@ -263,8 +263,9 @@ const obtenerDatosTXT = () => {
         .then(function (data) {
             return data.text();
         })
-        .then((allCardsJSON) => {
-            showCards(allCardsJSON);
+        .then((datos) => {
+            console.log(datos);
+            showCards(datos);
             
         })
         .catch((err) => {
