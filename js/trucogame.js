@@ -402,7 +402,7 @@ const sumarTablaPlayer = () => {
     
     switch (trucoLevel) {
         case 1: puntosJuego++; actualizacionPuntosPLayer(); break;
-        case 2: puntosJuego  += puntosJuego + 2; actualizacionPuntosPLayer(); break;
+        case 2: puntosJuego = puntosJuego + 2; actualizacionPuntosPLayer(); break;
         case 3: puntosJuego = puntosJuego + 3; actualizacionPuntosPLayer(); break;
         case 4: puntosJuego = puntosJuego + 4; actualizacionPuntosPLayer(); break;
         default: puntos.innerHTML = 0;
