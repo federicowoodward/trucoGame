@@ -13,29 +13,30 @@ let playerCards = [];
 
 let mesaDeJuego = [];
 
-let mesaDeJuegoPc = [];      /* temporal hasta crear IA*/ function temporal() {pcCards.length == 3 && mesaDeJuegoPc.push(pcCards[0],pcCards[1],pcCards[2]); }
+let mesaDeJuegoPc = [];      /* temporal hasta crear IA*/ function temporal() {pcCards.length == 3 && mesaDeJuegoPc.push(pcCards[0],pcCards[1],pcCards[2]); mesaDeJuegoPc.sort(function () {return Math.random() - 0.5}); }
 
 let nameTagTab = document.getElementById("nameTagTab");
 let bienvenidoName = document.getElementById("bienvenidoName");
 
+let puntosJuego = 0;
 
+let puntosJuegoPc = 0;
 
 let t = document.getElementById("t");
 let rt = document.getElementById("rt");
 let vc = document.getElementById("vc");
-let rtn = document.getElementById("rt");
-let vcn = document.getElementById("vc");
+let e = document.getElementById("e");
+let de = document.getElementById("de");
+let re = document.getElementById("re");
+let fe = document.getElementById("fe");
 
 let cantosPc = [true,false,true,false,true,false]; cantosPc.sort(function() {return Math.random() - 0.5});
 
+let puntosEnvidoPlayer = 0; 
 
-
-
+let puntosEnvidoPc = 0;
 // ---------------------------------------    eventos --------------------------------
 boton.addEventListener("click", startGame);
-
-
-
 
 boton.addEventListener("click",() => { document.getElementById("btnEvento").style.display = "none";})
 
@@ -51,8 +52,7 @@ const init = ()=> {
         inputPlaceholder: "Nombre",
         confirmButtonText: 'Confirmar',
         showLoaderOnConfirm: true,
-        
-        
+    
         inputValidator: (value) => {
             if (!value) {
               return 'Necesitamos tu nombre!'
@@ -76,13 +76,22 @@ document.addEventListener("DOMContentLoaded", init);
 
 function startGame () {
     mezclarCartas(allCards);
+    mostrar();
 }
 
+mostrar = () => {
+    let cartasUsuario = document.getElementById("cartasUsuario");
+    let cantos = document.getElementById("cantos");
+    cartasUsuario.style = "display: flex; flex-direction: row; justify-content: space-between;";
+    cantos.style.display = "inline";
+}
+   
+
 function mezclarCartas(array) {
-    
+    if (playerCards.length <3) {
     let carta1 = array[Math.floor(Math.random() * array.length)];   //me da una carta random.
     if (carta1.random === true) {                                   //comprueba q la carta no haya sido ya elegida.                
-        mezclarCartas(allCards);                                    //si ya se elijio reejecuta.
+        mezclarCartas(allCards);                                   //si ya se elijio reejecuta.
     } else if (carta1.random === false) {                           //comprueba q la carta no haya sido ya elegida. 
         carta1.random = true;                                       //avisa q la carta fue elegida.                           
         document.querySelector(".b1").innerHTML = carta1.simbolo;   // muestra carta.
@@ -94,7 +103,6 @@ function mezclarCartas(array) {
 
     let carta2 = array[Math.floor(Math.random() * array.length)];
     if (carta2.random === true) {
-        mezclarCartas(allCards);
     } else if (carta2.random === false) {
         carta2.random = true;
         document.querySelector(".b2").innerHTML = carta2.simbolo;
@@ -111,8 +119,9 @@ function mezclarCartas(array) {
         document.querySelector(".c3").innerHTML = carta3.numero;
         playerCards.push(carta3);  
     }
-    
+    }
     // ahora vamos a darle cartas a la pc.
+    if (pcCards.length <3) {
 
     let cartaPc1 = array[Math.floor(Math.random() * array.length)];
     if (cartaPc1.random === true) {
@@ -137,46 +146,84 @@ function mezclarCartas(array) {
         cartaPc3.random = true;
         pcCards.push(cartaPc3);
     }
-
+    }
     console.log(pcCards);
+    console.log(playerCards);
     temporal();
-    document.getElementById("botones123").style.display = "flex";
-}
+    if (playerCards.length == 3 ) {mostrarBotones123();} else {ocultarBotones123()}
+}   
+
+    const mostrarBotones123 = () => {
+        document.getElementById("botones123").style.cssText = "display: flex;";
+        document.getElementById("btnCarta1").style.display = "flex";
+        document.getElementById("btnCarta2").style.display = "flex";
+        document.getElementById("btnCarta3").style.display = "flex";
+    }
+    const ocultarBotones123 = () => {
+        document.getElementById("botones123").style.cssText = "display: none;";
+    }
 
     const jugada1 = () => { 
         document.getElementById("btnCarta1").style.display = "none";
-        comparacionDeCarta(playerCards[0],pcCards[0]);
+        comparacionDeCarta(playerCards[0],mesaDeJuegoPc[0]);
     }
     const jugada2 = () => { 
         document.getElementById("btnCarta2").style.display = "none";
-        comparacionDeCarta(playerCards[1],pcCards[1]);
+        comparacionDeCarta(playerCards[1],mesaDeJuegoPc[1]);
     }
     const jugada3 = () => { 
         document.getElementById("btnCarta3").style.display = "none";
-        comparacionDeCarta(playerCards[2],pcCards[2]);
+        comparacionDeCarta(playerCards[2],mesaDeJuegoPc[2]);
     }
     botonC1.addEventListener("click",jugada1);
     botonC2.addEventListener("click",jugada2);
     botonC3.addEventListener("click",jugada3);
 
-    
-
- 
+let ronda = [];
 
  function comparacionDeCarta(playerCard, pcCard) { 
     if (playerCard.peso == pcCard.peso) {
-         alert("Empate");
+         Swal.fire("Parda","Ganador de la proxima jugada gana la ronda");
+         ronda.push("p")
         } else if (playerCard.peso > pcCard.peso) {
-             alert("ganaste");
-             sumarTablaPlayer();
+            ronda.push(true);
+            
             } else if (playerCard.peso < pcCard.peso) {
-                 alert("perdiste");
-                }
+                ronda.push(false);
+                } 
+    if (ronda.length == 3) {comparacionDeRonda()};
  }   
- 
+ const comparacionDeRonda = () => {3
+        ronda[0] && ronda[1] && true ? finRondaGanando() : 
+        ronda[0] && ronda[2] && true ? finRondaGanando() :
+        !ronda[0] && ronda[1]  && ronda[2] ? finRondaGanando() :
+        !ronda[0] && !ronda[1] && true ? finRondaPerdiendo() : 
+        !ronda[0] && !ronda[2] && true ? finRondaPerdiendo() : 
+        ronda[0] && !ronda[1] && !ronda[2] ? finRondaPerdiendo() :
+        ronda[0] == "p" && ronda[1] && true ? finRondaGanando() : 
+        ronda[0] == "p" && !ronda[1] && true ? finRondaPerdiendo() :
+        ronda[0] && ronda[1] == "p" && true ? finRondaGanando() :
+        !ronda[0] && ronda[1] == "p" && true ? finRondaPerdiendo() :
+        ronda[0] == "p" && ronda[0] == "p" && ronda[2] ? finRondaGanando() :
+        ronda[0] == "p" && ronda[0] == "p" && !ronda[2] ? finRondaPerdiendo() :
+        ronda[0] == "p" && ronda[0] == "p" && ronda[0] == "p" ? tripleEmpate(): null;
+ }
 
- //tabla 
 
+const finRondaGanando = () => {
+    mezclarCartas(allCards);
+    Swal.fire('Ganaste! siguiente ronda!','success',);
+    sumarTablaPlayer();
+} 
+const finRondaPerdiendo = () => {
+    mezclarCartas(allCards);
+    Swal.fire('Perdiste! siguiente ronda!','success',);
+    sumarTablaPc();
+} 
+const tripleEmpate  = () => {
+    mezclarCartas(allCards);
+    Swal.fire("Las tres rondas se empataron, vuelve a empezar y nadie gana puntos");
+}
 
 
 //  truco 
@@ -188,55 +235,171 @@ document.getElementById("rt").style.display = "none";
 document.getElementById("vc").style.display = "none";
 
 const trucoPorPc = () => {
-    cantoTruco(cantosPc[2]);
+    cantoTruco(true);
     document.getElementById("t").style.display = "none";
     document.getElementById("rt").style.display = "inline";
     truco = true;
 }
 const reTrucoPorPc = () => {
-    cantoReTruco(cantosPc[5]);
+    cantoReTruco(true);
     document.getElementById("rt").style.display = "none";
     document.getElementById("vc").style.display = "inline";
     reTruco = true;
 }
 const vale4PorPc = () => {
-    cantoVale4(cantosPc[0]);
+    cantoVale4(true);
     document.getElementById("vc").style.display = "none";
     vale4 = true;
 }
 
-
-//
 let trucoLevel = 1;
 
     function cantoTruco (respuestaPc) {
-    if (respuestaPc == true) { alert("Continua la ronda, truco cantado"); trucoLevel = 2;
-        } else { alert("termina la ronda")};
+    if (respuestaPc == true) { Swal.fire("Truco cantado!"); trucoLevel = 2;
+        } else { Swal.fire("Termina la ronda");
+    finRondaGanando()};
     }
     function cantoReTruco (respuestaPc) {
-        if (respuestaPc == true) { alert("Continua la ronda, truco cantado"); trucoLevel = 3;
-            } else { alert("termina la ronda")};
+        if (respuestaPc == true) { Swal.fire("Retruco cantado"); trucoLevel = 3;
+            } else { Swal.fire("Termina la ronda");
+            finRondaGanando();};
         }
     function cantoVale4 (respuestaPc) {
-        if (respuestaPc == true) { alert("Continua la ronda, truco cantado"); trucoLevel = 4;
-            } else { alert("termina la ronda")};
+        if (respuestaPc == true) { Swal.fire("Vale cuatro cantado"); trucoLevel = 4;
+            } else { Swal.fire("Termina la ronda");
+            finRondaGanando()};
         }
 
  t.addEventListener("click", trucoPorPc);
  rt.addEventListener("click", reTrucoPorPc);
  vc.addEventListener("click", vale4PorPc);
 
+// envido, botones funcionando
 
-let puntosPc = document.getElementById("puntosPc");
-let puntosJuego = 0;
+document.getElementById("de").style.display = "none";
+document.getElementById("re").style.display = "none";
+document.getElementById("fe").style.display = "none";
+
+const envidoPc = () => {
+    document.getElementById("e").style.display = "none";
+    document.getElementById("de").style.display = "inline";
+    calcularEnvido(1);
+}
+const dobleEnvidoPc = () => {
+    document.getElementById("de").style.display = "none";
+    document.getElementById("re").style.display = "inline";
+    calcularEnvido(2);
+}
+const realEnvido = () => {
+    document.getElementById("re").style.display = "none";
+    document.getElementById("fe").style.display = "inline";
+    calcularEnvido(3);
+}
+const  faltaEnvido = () => {
+    document.getElementById("fe").style.display = "none";
+    calcularEnvido(4);
+}
+    
+let envidoLevel = 0;
+
+const calcularEnvido = (envidoCantado) => {
+    
+    playerCards[0].simbolo == playerCards[1].simbolo ? puntosEnvidoPlayer = playerCards[0].envido + playerCards[1].envido + 20:
+    playerCards[0].simbolo == playerCards[2].simbolo ? puntosEnvidoPlayer = playerCards[0].envido + playerCards[2].envido + 20:
+    playerCards[1].simbolo == playerCards[2].simbolo ? puntosEnvidoPlayer = playerCards[1].envido + playerCards[2].envido + 20:
+    playerCards[0].envido > playerCards[1].envido ? puntosEnvidoPlayer = playerCards[0].envido:
+    playerCards[1].envido > playerCards[2].envido ? puntosEnvidoPlayer = playerCards[1].envido:
+    puntosEnvidoPlayer = playerCards[2].envido;
+
+    
+    pcCards[0].simbolo == pcCards[1].simbolo ? puntosEnvidoPc = pcCards[0].envido + pcCards[1].envido + 20:
+    pcCards[0].simbolo == pcCards[2].simbolo ? puntosEnvidoPc = pcCards[0].envido + pcCards[2].envido + 20:
+    pcCards[1].simbolo == pcCards[2].simbolo ? puntosEnvidoPc = pcCards[1].envido + pcCards[2].envido + 20:
+    pcCards[0].envido > pcCards[1].envido ? puntosEnvidoPc = pcCards[0].envido:
+    pcCards[1].envido > pcCards[2].envido ? puntosEnvidoPc = pcCards[1].envido:
+    puntosEnvidoPlayer = pcCards[2].envido;
+    envido(envidoCantado);
+}
+
+const envido = (arr) => {
+    switch (arr) {
+        case 1: 
+        if (puntosEnvidoPlayer > puntosEnvidoPc) {
+            puntosJuego = puntosJuego + 2;
+            actualizacionPuntosPLayer();
+        } else if (puntosEnvidoPlayer < puntosEnvidoPc) {
+            puntosJuegoPc = puntosJuegoPc + 2;
+            actualizacionPuntosPc();
+        } else { 
+            Swal.fire("Empate de envido!");
+        }
+        break;
+        case 2: 
+        if (puntosEnvidoPlayer > puntosEnvidoPc) {
+            puntosJuego = puntosJuego + 4;
+            actualizacionPuntosPLayer();
+        } else if (puntosEnvidoPlayer < puntosEnvidoPc) {
+            puntosJuegoPc = puntosJuegoPc + 4;
+            actualizacionPuntosPc();
+        } else { 
+            Swal.fire("Empate de envido!");
+        }   
+        break;
+        case 3: 
+        if (puntosEnvidoPlayer > puntosEnvidoPc) {
+            puntosJuego = puntosJuego + 7;
+            actualizacionPuntosPLayer();
+        } else if (puntosEnvidoPlayer < puntosEnvidoPc) {
+            puntosJuegoPc = puntosJuegoPc + 7;
+            actualizacionPuntosPc();
+        } else { 
+            Swal.fire("Empate de envido!");
+        }
+        break;
+        case 4: 
+        if (puntosEnvidoPlayer > puntosEnvidoPc) {
+            puntosJuego = puntosJuego + 30;
+            actualizacionPuntosPLayer();
+        } else if (puntosEnvidoPlayer < puntosEnvidoPc) {
+            puntosJuegoPc = puntosJuegoPc + 30;
+            actualizacionPuntosPc();
+        } else { 
+            Swal.fire("Empate de envido!");
+        }
+        break;
+        default: console.log("algo fallo en envido"); break;
+    }
+}
+
+e.addEventListener("click", envidoPc);
+de.addEventListener("click", dobleEnvidoPc);
+re.addEventListener("click", realEnvido);
+fe.addEventListener("click", faltaEnvido);
+
+
+ //tabla
+
+
 
 const sumarTablaPlayer = () => { 
     
     switch (trucoLevel) {
         case 1: puntosJuego++; actualizacionPuntosPLayer(); break;
-        case 2: puntosJuego =  puntosJuego + 2; actualizacionPuntosPLayer(); break;
-        case 3: puntosJuego =  puntosJuego + 3; actualizacionPuntosPLayer(); break;
-        case 4: puntosJuego =  puntosJuego + 4; actualizacionPuntosPLayer(); break;
+        case 2: puntosJuego = puntosJuego + 2; actualizacionPuntosPLayer(); break;
+        case 3: puntosJuego = puntosJuego + 3; actualizacionPuntosPLayer(); break;
+        case 4: puntosJuego = puntosJuego + 4; actualizacionPuntosPLayer(); break;
+        default: puntos.innerHTML = 0;
+    }
+    
+ }
+
+ const sumarTablaPc = () => { 
+    
+    switch (trucoLevel) {
+        case 1: puntosJuegoPc++; actualizacionPuntosPc(); break;
+        case 2: puntosJuegoPc = puntosJuegoPc + 2; actualizacionPuntosPc(); break;
+        case 3: puntosJuegoPc = puntosJuegoPc + 3; actualizacionPuntosPc(); break;
+        case 4: puntosJuegoPc = puntosJuegoPc + 4; actualizacionPuntosPc(); break;
         default: puntos.innerHTML = 0;
     }
     
@@ -247,34 +410,13 @@ const actualizacionPuntosPLayer = () => {
         puntos.innerHTML = puntosJuego;
     }
 
-function showCards({numero,simbolo}) {
-    const contenido = document.getElementById("contenido")
 
-    contenido.innerHTML = `
-        <p> Numero: ${numero} </p>
-        <p> Simbolo: ${simbolo} </p>
-    `
-}
+    const actualizacionPuntosPc = () => {
+        let puntos = document.getElementById("puntosPc");
+        puntos.innerHTML = puntosJuegoPc;
+    }
 
 
-const obtenerDatosTXT = () => {
-    
-    fetch("js/cartas.js")
-        .then(function (data) {
-            return data.text();
-        })
-        .then((datos) => {
-            console.log(datos);
-            showCards(datos);
-            
-        })
-        .catch((err) => {
-            console.log(err);
-        })
-
-}
 
 
-const btnTxt = document.getElementById("btnTxt");
-btnTxt.addEventListener("click",obtenerDatosTXT);   
 

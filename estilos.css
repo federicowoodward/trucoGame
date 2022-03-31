@@ -1,22 +1,54 @@
-.tablaPuntaje {
-    padding: center;
-    padding: 30px;
+#botones123, #cartasUsuario, #cantos  {
+    display: none;
 }
-.tablaPuntaje table {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    border: 5px #0091ff solid";
-    
-}
+
+
+/* Mobile first */
 .btnCartas {
     display: flex;
     flex-direction: row;
     justify-content: center;
-    padding-top: 10px;
+    margin: 100px;
 }
+#bienvenidoName {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding: 3em;
 
-#botones123 {
-    display: none;
 }
-
+body {
+    background: rgb(0,135,255);
+    background: linear-gradient(90deg, rgba(0,135,255,1) 3%, rgba(255,255,255,1) 30%, rgba(255,255,255,1) 70%, rgba(0,135,255,1) 97%);
+}   
+p {
+    font-family: 'Oswald', sans-serif;
+    font-size: 35px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    text-align: center;
+    padding: 10px;
+}
+table {
+    margin: 5em 6em 0 6em;
+    background-color: grey;
+    text-align: left;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+table td {
+    padding: 15px;
+    text-align: center;
+    font-size: 30px;
+    
+}
+#cartasUsuario {
+    margin: 100px;
+    flex-direction: row;
+    justify-content: space-between;
+}
+#cartasUsuario h5 {
+    text-align: center;
+}
