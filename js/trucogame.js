@@ -59,14 +59,14 @@ const init = ()=> {
             } else if (value) {
                 localStorage.setItem("nameTag", value);
                 nameTagTab.innerHTML = localStorage.getItem("nameTag");
-                bienvenidoName.innerHTML = "Bienvenido " + localStorage.getItem("nameTag") + "!!";
+                bienvenidoName.innerHTML = `"Bienvenido " +  ${localStorage.getItem("nameTag")} +  "!!"`;
             }
         }
     }
     )
 } else {
     nameTagTab.innerHTML = localStorage.getItem("nameTag");
-    bienvenidoName.innerHTML = "Bienvenido " + localStorage.getItem("nameTag") + "!!";
+    bienvenidoName.innerHTML = `"Bienvenido " +  ${localStorage.getItem("nameTag")} +  "!!"`;
 };
 }
 
@@ -82,8 +82,12 @@ function startGame () {
 mostrar = () => {
     let cartasUsuario = document.getElementById("cartasUsuario");
     let cantos = document.getElementById("cantos");
+    let bienvenida = document.getElementById ("guia");
+    let bienvenidaN = document.getElementById("bienvenidoName");
     cartasUsuario.style = "display: flex; flex-direction: row; justify-content: space-between;";
     cantos.style.display = "inline";
+    bienvenida.style = "display: none;";
+    bienvenidaN.style = "display: none;";
 }
    
 
@@ -327,9 +331,11 @@ const envido = (arr) => {
         if (puntosEnvidoPlayer > puntosEnvidoPc) {
             puntosJuego = puntosJuego + 2;
             actualizacionPuntosPLayer();
+            avisoEnvidoPlayer(puntosJuego);
         } else if (puntosEnvidoPlayer < puntosEnvidoPc) {
             puntosJuegoPc = puntosJuegoPc + 2;
             actualizacionPuntosPc();
+            avisoEnvidoPc(puntosJuegoPc);
         } else { 
             Swal.fire("Empate de envido!");
         }
@@ -338,9 +344,11 @@ const envido = (arr) => {
         if (puntosEnvidoPlayer > puntosEnvidoPc) {
             puntosJuego = puntosJuego + 4;
             actualizacionPuntosPLayer();
+            avisoEnvidoPlayer(puntosJuego);
         } else if (puntosEnvidoPlayer < puntosEnvidoPc) {
             puntosJuegoPc = puntosJuegoPc + 4;
             actualizacionPuntosPc();
+            avisoEnvidoPc(puntosJuegoPc);
         } else { 
             Swal.fire("Empate de envido!");
         }   
@@ -349,9 +357,11 @@ const envido = (arr) => {
         if (puntosEnvidoPlayer > puntosEnvidoPc) {
             puntosJuego = puntosJuego + 7;
             actualizacionPuntosPLayer();
+            avisoEnvidoPlayer(puntosJuego);
         } else if (puntosEnvidoPlayer < puntosEnvidoPc) {
             puntosJuegoPc = puntosJuegoPc + 7;
             actualizacionPuntosPc();
+            avisoEnvidoPc(puntosJuegoPc);
         } else { 
             Swal.fire("Empate de envido!");
         }
@@ -360,9 +370,11 @@ const envido = (arr) => {
         if (puntosEnvidoPlayer > puntosEnvidoPc) {
             puntosJuego = puntosJuego + 30;
             actualizacionPuntosPLayer();
+            avisoEnvidoPlayer(puntosJuego);
         } else if (puntosEnvidoPlayer < puntosEnvidoPc) {
             puntosJuegoPc = puntosJuegoPc + 30;
             actualizacionPuntosPc();
+            avisoEnvidoPc(puntosJuegoPc);
         } else { 
             Swal.fire("Empate de envido!");
         }
@@ -376,7 +388,12 @@ de.addEventListener("click", dobleEnvidoPc);
 re.addEventListener("click", realEnvido);
 fe.addEventListener("click", faltaEnvido);
 
-
+const avisoEnvidoPlayer = (num) => {
+    Swal.fire(`"Envido ganado!, + " ${num} " + puntos sumados al marcador"` )
+}
+const avisoEnvidoPc = (num) => {
+    Swal.fire(`"Envido perdido!, + " ${num} " + puntos sumados al marcador rival"` )
+}
  //tabla
 
 
@@ -385,7 +402,7 @@ const sumarTablaPlayer = () => {
     
     switch (trucoLevel) {
         case 1: puntosJuego++; actualizacionPuntosPLayer(); break;
-        case 2: puntosJuego = puntosJuego + 2; actualizacionPuntosPLayer(); break;
+        case 2: puntosJuego  += puntosJuego + 2; actualizacionPuntosPLayer(); break;
         case 3: puntosJuego = puntosJuego + 3; actualizacionPuntosPLayer(); break;
         case 4: puntosJuego = puntosJuego + 4; actualizacionPuntosPLayer(); break;
         default: puntos.innerHTML = 0;
@@ -405,15 +422,39 @@ const sumarTablaPlayer = () => {
     
  }
 
+const reload = () => {
+    location.reload();
+}
+
 const actualizacionPuntosPLayer = () => {
         let puntos = document.getElementById("puntosPlayer");
         puntos.innerHTML = puntosJuego;
+        revisarPuntos = () => {
+            if (puntosJuego == 15) {
+                Swal.fire(`"El juego va en 15 puntos, Va ganando " + ${localStorage.getItem("nameTag")}`);
+            }
+            if (puntosJuego == 30 || puntosJuego > 30) {
+                Swal.fire("Ganaste el juego!!");
+                setInterval ("reload()", 5000);
+            } 
+        };
+      revisarPuntos();  
     }
 
 
     const actualizacionPuntosPc = () => {
         let puntos = document.getElementById("puntosPc");
         puntos.innerHTML = puntosJuegoPc;
+        revisarPuntos = () => {
+            if (puntosJuego == 15) {
+                Swal.fire("El juego va en 15 puntos, Va ganando la PC ");
+            }
+            if (puntosJuegoPc == 30 || puntosJuegoPc > 30) {
+                Swal.fire("Perdiste el juego!!");
+                setInterval ("reload()", 5000);
+            } 
+        };
+        revisarPuntos();
     }
 
 

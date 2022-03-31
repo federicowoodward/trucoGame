@@ -52,3 +52,37 @@ table td {
 #cartasUsuario h5 {
     text-align: center;
 }
+.container {  
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(4, 1fr);
+    gap: 0px 0px;
+    grid-auto-flow: row;
+    grid-template-areas:
+      "cartasUsuario"
+      "botones123"
+      "tablaPuntaje"
+      "cantos";
+  }
+  
+  .cartasUsuario {
+    justify-self: center;
+    grid-area: cartasUsuario;
+  }
+  
+  .botones123 {
+    justify-self: center;
+    grid-area: botones123;
+  }
+  
+  .tablaPuntaje {
+    justify-self: center;
+    grid-area: tablaPuntaje;
+  }
+  
+  .cantos {
+    justify-self: stretch;
+    grid-area: cantos;
+    margin: 3em;
+  }
+  
