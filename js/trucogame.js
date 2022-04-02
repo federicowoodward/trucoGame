@@ -59,14 +59,14 @@ const init = ()=> {
             } else if (value) {
                 localStorage.setItem("nameTag", value);
                 nameTagTab.innerHTML = localStorage.getItem("nameTag");
-                bienvenidoName.innerHTML = `"Bienvenido " +  ${localStorage.getItem("nameTag")} +  "!!"`;
+                bienvenidoName.innerHTML = `“Bienvenido ${localStorage.getItem("nameTag")} !!”`;
             }
         }
     }
     )
 } else {
     nameTagTab.innerHTML = localStorage.getItem("nameTag");
-    bienvenidoName.innerHTML = `"Bienvenido " +  ${localStorage.getItem("nameTag")} +  "!!"`;
+    bienvenidoName.innerHTML = `“Bienvenido ${localStorage.getItem("nameTag")} !!”`;
 };
 }
 
@@ -93,17 +93,15 @@ mostrar = () => {
 
 function mezclarCartas(array) {
     if (playerCards.length <3) {
-    let carta1 = array[Math.floor(Math.random() * array.length)];   //me da una carta random.
-    if (carta1.random === true) {                                   //comprueba q la carta no haya sido ya elegida.                
-        mezclarCartas(allCards);                                   //si ya se elijio reejecuta.
-    } else if (carta1.random === false) {                           //comprueba q la carta no haya sido ya elegida. 
-        carta1.random = true;                                       //avisa q la carta fue elegida.                           
-        document.querySelector(".b1").innerHTML = carta1.simbolo;   // muestra carta.
-        document.querySelector(".c1").innerHTML = carta1.numero;    // muestra carta.
-        playerCards.push(carta1);                                   // añade la nueva carta al array del jugador.
+    let carta1 = array[Math.floor(Math.random() * array.length)]; 
+    if (carta1.random === true) {                                                 
+        mezclarCartas(allCards);                                 
+    } else if (carta1.random === false) {                           
+        carta1.random = true;                                                                
+        document.querySelector(".b1").innerHTML = carta1.simbolo;   
+        document.querySelector(".c1").innerHTML = carta1.numero;    
+        playerCards.push(carta1);                                   
     }  
-
-    // repetir para dos cartas mas. 
 
     let carta2 = array[Math.floor(Math.random() * array.length)];
     if (carta2.random === true) {
@@ -124,7 +122,6 @@ function mezclarCartas(array) {
         playerCards.push(carta3);  
     }
     }
-    // ahora vamos a darle cartas a la pc.
     if (pcCards.length <3) {
 
     let cartaPc1 = array[Math.floor(Math.random() * array.length)];
@@ -234,7 +231,7 @@ const tripleEmpate  = () => {
 let truco = false;
 let reTruco = false;
 let vale4 = false;
-// ocultacion de botones a medida q se van usamdo, NO TOCAR ANDA PERFECTO
+// ocultacion de botones a medida q se van usamdo.
 document.getElementById("rt").style.display = "none";
 document.getElementById("vc").style.display = "none";
 
@@ -278,7 +275,7 @@ let trucoLevel = 1;
  rt.addEventListener("click", reTrucoPorPc);
  vc.addEventListener("click", vale4PorPc);
 
-// envido, botones funcionando
+// envido
 
 document.getElementById("de").style.display = "none";
 document.getElementById("re").style.display = "none";
@@ -394,9 +391,8 @@ const avisoEnvidoPlayer = (num) => {
 const avisoEnvidoPc = (num) => {
     Swal.fire(`"Envido perdido!, + " ${num} " + puntos sumados al marcador rival"` )
 }
+
  //tabla
-
-
 
 const sumarTablaPlayer = () => { 
     
@@ -456,8 +452,3 @@ const actualizacionPuntosPLayer = () => {
         };
         revisarPuntos();
     }
-
-
-
-
-
